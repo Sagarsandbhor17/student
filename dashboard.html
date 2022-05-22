@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+   #nav{display:flex;background-color: black;padding:15px;
+        color:white;justify-content:space-around;flex-wrap:wrap;}
+    #cont{display:grid;grid-template-rows:repeat(auto,auto);
+        grid-template-columns: repeat(4,1fr);gap:10px;}
+        #cont>div{text-align: center;}
+        button:hover{cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div id="nav"></div>
+    <div id="cont">
+
+    </div>
+</body>
+</html>
+<script>
+var trash=JSON.parse(localStorage.getItem("trash"))||[];
+var arr=JSON.parse(localStorage.getItem("data"))||[];
+display(arr);
+let obj={};
+for(let i=0;i<arr.length;i++){
+let b=arr[i].batch;
+if(obj[b]==undefined){obj[b]=1}
+else{obj[b]=obj[b]+1}
+}
+for(var key in obj){
+    let box=document.createElement("div")
+    box.append(key+":"+obj[key])
+nav.append(box)}
+
+function display(data){let cont=document.querySelector("#cont");
+cont.innerHTML=null;
+data.forEach(function(el,index){
+let box=document.createElement("div");
+let img=document.createElement("img");img.setAttribute("src",el.img);
+let name=document.createElement("h3");name.innerText="NAME:"+el.name;
+let course =document.createElement("p");course.innerText="COURSE:"+el.course;
+let unit=document.createElement("p");unit.innerText="UNIT:"+el.unit;
+let batch=document.createElement("p");batch.innerText="BATCH:"+el.batch;
+let btn=document.createElement("button");btn.innerText="Remove";
+btn.style.backgroundColor="black";btn.style.color="red";btn.style.padding="10px";
+btn.addEventListener("click",function(){del(el,index)})
+box.append(img,name,course,unit,batch,btn)
+cont.append(box)
+})
+function del(el,index){
+arr.splice(index,1);
+trash.push(el);
+localStorage.setItem("trash",JSON.stringify(trash))
+localStorage.setItem("data",JSON.stringify(arr))
+window.location.reload();
+
+}
+
+
+}
+
+
+</script>

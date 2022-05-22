@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #cont{width:50%;margin:auto;margin-top:50px;padding:10px;
+            justify-content: center;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;}
+        input{margin:auto;margin-top:10px;padding:10px;width:60%;display:block}
+        #sub{width:40%;display: block;margin:auto;margin-top:10px;margin-bottom:10px;}
+        h1{text-align: center;}
+
+        #nav{display:flex;background-color: black;padding:15px;
+            color:white;justify-content:space-around;flex-wrap:wrap;}
+
+        a{display:block;margin:auto;text-decoration:none;color:brown;width:10%;font-weight:bolder;}
+    </style>
+</head>
+<body>
+<div id="nav"></div>
+<div id="cont">
+    <h1>Student Form</h1><br>
+<form id="form">
+<input type="url" id="image" placeholder="Image Url"><br>
+<input type="text" id="name" placeholder="Enter Your Name"><br>
+<input type="text" id="course" placeholder="Course"><br>
+<input type="number" id="unit" placeholder="Unit"><br>
+<input type="number" id="batch" placeholder="Enter Your Batch"><br>
+<input type="submit" id="sub"><br>
+<a href="dashboard.html">Dashboard</a>
+</form>
+</div>
+</body>
+</html>
+<script>
+    function Studentdata(i,n,c,u,b){
+        this.img=i,
+        this.name=n,
+        this.course=c,
+        this.unit=u,
+        this.batch="Batch No"+b
+    }
+document.querySelector("#form").addEventListener("submit",fun);
+var nav=document.querySelector("#nav");
+var arr=JSON.parse(localStorage.getItem("data"))||[];
+
+let obj={};
+for(let i=0;i<arr.length;i++){
+let b=arr[i].batch;
+if(obj[b]==undefined){obj[b]=1}
+else{obj[b]=obj[b]+1}
+}
+for(var key in obj){
+    let box=document.createElement("div")
+    box.append(key+"="+obj[key])
+nav.append(box)}
+
+function fun(){event.preventDefault();
+let img=form.image.value;
+let name=form.name.value;
+let course=form.course.value;
+let unit=form.unit.value;
+let batch=form.batch.value;
+let s1=new Studentdata(img,name,course,unit,batch)
+arr.push(s1);
+localStorage.setItem("data",JSON.stringify(arr))
+window.location.reload();
+}
+
+</script>
